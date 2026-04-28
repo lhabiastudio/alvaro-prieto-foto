@@ -1,0 +1,2785 @@
+<!-- DEMO — Diseño conceptual por LhabiaStudio. No autorizado para uso comercial -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Álvaro Prieto · Fotografía de Producto en Madrid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Core palette */
+      --color-bg:           #0D0D0D;
+      --color-bg-mid:       #111111;
+      --color-bg-card:      #161616;
+      --color-bg-surface:   #1A1A1A;
+      --color-bg-raised:    #222222;
+
+      /* Copper-gold accent */
+      --color-accent:       #C4890A;
+      --color-accent-light: #D9A030;
+      --color-accent-dark:  #9A6A06;
+      --color-accent-muted: rgba(196, 137, 10, 0.15);
+
+      /* Text */
+      --color-text-primary: #F5F0E8;
+      --color-text-secondary: rgba(245, 240, 232, 0.62);
+      --color-text-muted:   rgba(245, 240, 232, 0.35);
+
+      /* Borders */
+      --color-border:       rgba(196, 137, 10, 0.18);
+      --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+      /* Typography */
+      --ff-serif:  'Playfair Display', Georgia, serif;
+      --ff-body:   'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+      /* Layout */
+      --max-w:     1160px;
+
+      /* Transitions */
+      --ease-out:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-in:   cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      --ease-io:   cubic-bezier(0.645, 0.045, 0.355, 1.0);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      overflow-x: hidden;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ============================================================
+       SCROLL-REVEAL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.18s; }
+    .reveal-delay-3 { transition-delay: 0.28s; }
+    .reveal-delay-4 { transition-delay: 0.38s; }
+
+    /* ============================================================
+       LAYOUT UTILITIES
+    ============================================================ */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY UTILITIES
+    ============================================================ */
+    .serif { font-family: var(--ff-serif); }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--ff-body);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+    }
+
+    .gold-line {
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--color-accent);
+      margin: 1.25rem 0;
+    }
+
+    .gold-line--center {
+      margin-inline: auto;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header--center {
+      text-align: center;
+    }
+
+    .section-header--center .gold-line {
+      margin-inline: auto;
+    }
+
+    .section-heading {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      color: var(--color-text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .section-heading em {
+      font-style: italic;
+      color: var(--color-accent-light);
+    }
+
+    .section-subtext {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    .section-subtext--center {
+      margin-inline: auto;
+    }
+
+    /* ============================================================
+       ICON UTILITY
+    ============================================================ */
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-accent);
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 13px 32px;
+      font-family: var(--ff-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      border-radius: 2px;
+      transition: background 0.22s var(--ease-out),
+                  color 0.22s var(--ease-out),
+                  transform 0.22s var(--ease-out),
+                  box-shadow 0.22s var(--ease-out);
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #0D0D0D;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(196, 137, 10, 0.3);
+    }
+
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--color-accent-light);
+      outline-offset: 3px;
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-accent-light);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent-light);
+      background: var(--color-accent-muted);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost:focus-visible {
+      outline: 2px solid var(--color-accent-light);
+      outline-offset: 3px;
+    }
+
+    .btn-ghost:active {
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 1.5rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13, 13, 13, 0);
+      border-bottom: 1px solid rgba(196, 137, 10, 0);
+      transition: background 0.4s var(--ease-out),
+                  border-color 0.4s var(--ease-out);
+    }
+
+    #nav.scrolled {
+      background: rgba(13, 13, 13, 0.94);
+      border-bottom-color: var(--color-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-brand {
+      font-family: var(--ff-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-brand span {
+      color: var(--color-accent);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2.25rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--color-text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-accent-light);
+    }
+
+    .nav-links a:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    /* ============================================================
+       1. HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      padding-top: 68px;
+      background:
+        radial-gradient(ellipse 70% 90% at 80% 50%,
+          rgba(30, 18, 4, 0.95) 0%,
+          rgba(13, 13, 13, 0) 60%),
+        linear-gradient(160deg,
+          #0D0D0D 0%,
+          #0F0B06 35%,
+          #111008 65%,
+          #0D0D0D 100%);
+    }
+
+    /* Ambient glow top-left */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 85% 45%,
+          rgba(196, 137, 10, 0.09) 0%,
+          transparent 60%),
+        radial-gradient(ellipse 30% 40% at 15% 70%,
+          rgba(196, 137, 10, 0.04) 0%,
+          transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Vertical light streak — studio strobe suggestion */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 22%;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(196, 137, 10, 0.22) 30%,
+        rgba(196, 137, 10, 0.35) 50%,
+        rgba(196, 137, 10, 0.14) 75%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      padding: 5rem 1.5rem 4rem;
+      max-width: var(--max-w);
+      width: 100%;
+      margin-inline: auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      background: rgba(196, 137, 10, 0.06);
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      animation: dotPulse 2.4s ease-in-out infinite;
+    }
+
+    .hero-badge-text {
+      font-size: 0.67rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+    }
+
+    .hero-headline {
+      font-family: var(--ff-serif);
+      font-size: clamp(2.8rem, 8vw, 5.8rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--color-accent-light);
+      display: block;
+    }
+
+    .hero-subheadline {
+      font-family: var(--ff-serif);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.03em;
+      margin-bottom: 2rem;
+      max-width: 580px;
+    }
+
+    .hero-divider {
+      display: block;
+      width: 56px;
+      height: 1px;
+      background: var(--color-accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-descriptor {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      max-width: 460px;
+      margin-bottom: 3rem;
+    }
+
+    .hero-descriptor strong {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .hero-stats {
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--color-border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .hero-stat-value {
+      font-family: var(--ff-serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--color-accent-light);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text-muted);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      z-index: 3;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(196, 137, 10, 0.7), transparent);
+      animation: scrollPulse 2.4s var(--ease-out) infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1.12); transform-origin: top; }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* ============================================================
+       2. ESPECIALIDADES
+    ============================================================ */
+    #especialidades {
+      padding: 100px 0;
+      background: var(--color-bg-mid);
+      position: relative;
+    }
+
+    #especialidades::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 20%,
+          rgba(196, 137, 10, 0.04) 0%,
+          transparent 60%);
+      pointer-events: none;
+    }
+
+    .especialidades-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .especialidad-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 3px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s var(--ease-out),
+                  transform 0.3s var(--ease-out),
+                  box-shadow 0.3s var(--ease-out);
+    }
+
+    .especialidad-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--color-accent) 50%,
+        transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out);
+    }
+
+    .especialidad-card:hover {
+      border-color: var(--color-border);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .especialidad-card:hover::before {
+      opacity: 1;
+    }
+
+    .especialidad-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-accent-muted);
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      color: var(--color-accent-light);
+    }
+
+    .especialidad-name {
+      font-family: var(--ff-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .especialidad-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .especialidad-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      border: 1px solid var(--color-border);
+      padding: 4px 10px;
+      border-radius: 1px;
+      background: var(--color-accent-muted);
+    }
+
+    /* ============================================================
+       3. PROCESO
+    ============================================================ */
+    #proceso {
+      padding: 100px 0;
+      background: var(--color-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #proceso::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 40% 60% at 50% 50%,
+          rgba(196, 137, 10, 0.03) 0%,
+          transparent 70%);
+      pointer-events: none;
+    }
+
+    .proceso-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      margin-top: 3rem;
+    }
+
+    .proceso-step {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 0 1.5rem;
+      position: relative;
+    }
+
+    .proceso-step + .proceso-step {
+      margin-top: 0;
+    }
+
+    .proceso-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .proceso-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--color-accent-light);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s var(--ease-out),
+                  border-color 0.3s var(--ease-out);
+    }
+
+    .proceso-step:hover .proceso-number {
+      background: var(--color-accent-muted);
+      border-color: var(--color-accent);
+    }
+
+    .proceso-connector {
+      flex: 1;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        var(--color-border) 0%,
+        rgba(196, 137, 10, 0.08) 100%);
+      margin-top: 4px;
+      min-height: 48px;
+    }
+
+    .proceso-step:last-child .proceso-connector {
+      display: none;
+    }
+
+    .proceso-content {
+      padding-bottom: 3rem;
+      padding-top: 0.6rem;
+    }
+
+    .proceso-step:last-child .proceso-content {
+      padding-bottom: 0;
+    }
+
+    .proceso-step-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .proceso-step-title {
+      font-family: var(--ff-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .proceso-step-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       4. PORTFOLIO
+    ============================================================ */
+    #portfolio {
+      padding: 100px 0;
+      background: var(--color-bg-mid);
+    }
+
+    .portfolio-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 1px;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--color-accent);
+      color: var(--color-accent-light);
+      background: var(--color-accent-muted);
+    }
+
+    .filter-btn:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .portfolio-card {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+    }
+
+    .portfolio-card:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.65s var(--ease-out);
+    }
+
+    .portfolio-card:hover .card-bg {
+      transform: scale(1.05);
+    }
+
+    /* ---- Individual card gradients — product photography palette ---- */
+
+    /* Moda: perfume/cosmética — deep burgundy, soft rim light */
+    .card-moda-1 .card-bg {
+      background:
+        radial-gradient(ellipse 65% 55% at 55% 40%,
+          rgba(80, 20, 40, 0.9) 0%,
+          rgba(30, 8, 15, 1) 55%,
+          rgba(10, 4, 8, 1) 100%),
+        linear-gradient(135deg,
+          rgba(196, 137, 10, 0.08) 0%,
+          transparent 50%);
+    }
+
+    /* Moda: bolso de piel — chocolate profundo */
+    .card-moda-2 .card-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 40% 60%,
+          rgba(55, 30, 12, 0.95) 0%,
+          rgba(22, 10, 4, 1) 55%,
+          rgba(8, 4, 2, 1) 100%),
+        linear-gradient(315deg,
+          rgba(196, 137, 10, 0.06) 0%,
+          transparent 45%);
+    }
+
+    /* Cosmética: skincare blanco-mineral */
+    .card-cosm-1 .card-bg {
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 30%,
+          rgba(42, 38, 34, 0.98) 0%,
+          rgba(18, 16, 14, 1) 55%,
+          rgba(8, 7, 6, 1) 100%),
+        radial-gradient(ellipse 40% 40% at 80% 60%,
+          rgba(200, 190, 175, 0.07) 0%,
+          transparent 60%);
+    }
+
+    /* Cosmética: labiales — azul marino oscuro, foco central */
+    .card-cosm-2 .card-bg {
+      background:
+        radial-gradient(ellipse 50% 60% at 50% 50%,
+          rgba(14, 22, 38, 0.98) 0%,
+          rgba(6, 9, 18, 1) 60%,
+          rgba(4, 4, 8, 1) 100%),
+        linear-gradient(225deg,
+          rgba(80, 120, 180, 0.08) 0%,
+          transparent 55%);
+    }
+
+    /* Gastronomía: plato negro, vapor de luz */
+    .card-gastro-1 .card-bg {
+      background:
+        radial-gradient(ellipse 60% 50% at 45% 45%,
+          rgba(30, 22, 10, 0.95) 0%,
+          rgba(12, 8, 3, 1) 55%,
+          rgba(5, 3, 1, 1) 100%),
+        radial-gradient(ellipse 30% 40% at 70% 30%,
+          rgba(196, 137, 10, 0.12) 0%,
+          transparent 60%);
+    }
+
+    /* Gastronomía: vino, copa, fondo negro satinado */
+    .card-gastro-2 .card-bg {
+      background:
+        radial-gradient(ellipse 55% 65% at 60% 40%,
+          rgba(45, 10, 18, 0.96) 0%,
+          rgba(15, 3, 6, 1) 55%,
+          rgba(5, 2, 3, 1) 100%),
+        linear-gradient(180deg,
+          rgba(196, 137, 10, 0.07) 0%,
+          transparent 40%);
+    }
+
+    /* E-commerce: electrónica — grafito */
+    .card-ecom-1 .card-bg {
+      background:
+        radial-gradient(ellipse 75% 55% at 50% 55%,
+          rgba(28, 28, 30, 0.98) 0%,
+          rgba(10, 10, 12, 1) 55%,
+          rgba(4, 4, 5, 1) 100%),
+        linear-gradient(90deg,
+          rgba(100, 140, 200, 0.06) 0%,
+          transparent 50%);
+    }
+
+    /* E-commerce: zapatillas — blanco-gris puro */
+    .card-ecom-2 .card-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 35% 50%,
+          rgba(32, 30, 28, 0.97) 0%,
+          rgba(14, 13, 12, 1) 55%,
+          rgba(6, 5, 4, 1) 100%),
+        radial-gradient(ellipse 35% 45% at 75% 35%,
+          rgba(220, 210, 195, 0.06) 0%,
+          transparent 60%);
+    }
+
+    /* Grain texture overlay — same SVG trick as reference */
+    .card-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      opacity: 0.55;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    /* Subtle vignette always visible */
+    .card-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 90% 85% at 50% 50%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.45) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Overlay label */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10, 8, 5, 0.88) 0%,
+        rgba(10, 8, 5, 0.4) 35%,
+        transparent 65%
+      );
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-out);
+    }
+
+    .portfolio-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-label-category {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-label-title {
+      font-family: var(--ff-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+
+    /* ============================================================
+       5. CLIENTES
+    ============================================================ */
+    #clientes {
+      padding: 80px 0;
+      background: var(--color-bg);
+      border-top: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .clientes-intro {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .clientes-intro p {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .clientes-sectors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem 1.5rem;
+    }
+
+    .sector-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 2px;
+      background: var(--color-bg-card);
+      transition: border-color 0.25s var(--ease-out),
+                  background 0.25s var(--ease-out);
+    }
+
+    .sector-badge:hover {
+      border-color: var(--color-border);
+      background: var(--color-bg-surface);
+    }
+
+    .sector-badge-name {
+      font-family: var(--ff-serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      letter-spacing: 0.03em;
+    }
+
+    .sector-badge .icon {
+      color: var(--color-accent);
+    }
+
+    .clientes-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       6. TARIFAS
+    ============================================================ */
+    #tarifas {
+      padding: 100px 0;
+      background: var(--color-bg-mid);
+      position: relative;
+    }
+
+    #tarifas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 50% 80%,
+          rgba(196, 137, 10, 0.04) 0%,
+          transparent 65%);
+      pointer-events: none;
+    }
+
+    .price-disclaimer {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      letter-spacing: 0.06em;
+    }
+
+    .tarifas-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .tarifa-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 3px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: border-color 0.3s var(--ease-out),
+                  transform 0.3s var(--ease-out),
+                  box-shadow 0.3s var(--ease-out);
+    }
+
+    .tarifa-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+    }
+
+    .tarifa-card.featured {
+      border-color: var(--color-accent);
+      background: linear-gradient(160deg,
+        rgba(196, 137, 10, 0.07) 0%,
+        var(--color-bg-card) 40%);
+    }
+
+    .tarifa-card.featured:hover {
+      border-color: var(--color-accent-light);
+    }
+
+    .featured-ribbon {
+      position: absolute;
+      top: -0.7rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: #0D0D0D;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 1px;
+      white-space: nowrap;
+    }
+
+    .tarifa-tier {
+      font-size: 0.67rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .tarifa-name {
+      font-family: var(--ff-serif);
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: 0.3rem;
+    }
+
+    .tarifa-ideal {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .tarifa-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .price-value {
+      font-family: var(--ff-serif);
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--color-accent-light);
+      line-height: 1;
+    }
+
+    .price-suffix {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    .tarifa-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .tarifa-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      line-height: 1.4;
+    }
+
+    .tarifa-features li:last-child {
+      border-bottom: none;
+    }
+
+    .tarifa-features .icon {
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       7. CONTACTO
+    ============================================================ */
+    #contacto {
+      padding: 100px 0;
+      background: var(--color-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contacto::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 50%,
+          rgba(196, 137, 10, 0.05) 0%,
+          transparent 65%);
+      pointer-events: none;
+    }
+
+    .contacto-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contacto-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .contacto-info-item:first-child {
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .contacto-info-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .contacto-info-value {
+      font-size: 0.95rem;
+      color: var(--color-text-primary);
+    }
+
+    .contacto-info-value a {
+      color: var(--color-accent-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contacto-info-value a:hover {
+      color: var(--color-accent);
+    }
+
+    /* Form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .form-label sup {
+      color: var(--color-accent);
+      margin-left: 2px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 2px;
+      color: var(--color-text-primary);
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      transition: border-color 0.22s var(--ease-out),
+                  background 0.22s var(--ease-out),
+                  box-shadow 0.22s var(--ease-out);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-control::placeholder {
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+    }
+
+    .form-control:hover {
+      border-color: var(--color-border);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      background: var(--color-bg-surface);
+      box-shadow: 0 0 0 3px rgba(196, 137, 10, 0.1);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23C4890A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    select.form-control option {
+      background: var(--color-bg-card);
+      color: var(--color-text-primary);
+    }
+
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .form-note {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* Form success state */
+    .form-success {
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 2rem;
+      background: rgba(196, 137, 10, 0.06);
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+    }
+
+    .form-success.visible {
+      display: flex;
+    }
+
+    .success-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-accent-muted);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent-light);
+    }
+
+    .success-heading {
+      font-family: var(--ff-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--color-text-primary);
+    }
+
+    .success-body {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--color-bg);
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .footer-inner {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: var(--ff-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(245, 240, 232, 0.2);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-meta {
+      font-size: 0.72rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-meta a {
+      color: var(--color-accent);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    .footer-meta a:hover {
+      opacity: 1;
+    }
+
+    .footer-disclaimer {
+      font-size: 0.68rem;
+      color: rgba(245, 240, 232, 0.2);
+      font-style: italic;
+    }
+
+    /* ============================================================
+       RESPONSIVE — mobile (max-width: 480px)
+    ============================================================ */
+    @media (max-width: 480px) {
+      #hero {
+        padding-top: 68px;
+      }
+
+      .hero-inner {
+        padding: 3.5rem 1.25rem 3rem;
+      }
+
+      .hero-stats {
+        margin-top: 3rem;
+        gap: 1.25rem;
+      }
+
+      .hero-cta-group {
+        gap: 0.75rem;
+      }
+
+      #especialidades,
+      #proceso,
+      #portfolio,
+      #clientes,
+      #tarifas,
+      #contacto {
+        padding-top: 72px;
+        padding-bottom: 72px;
+      }
+
+      .section-heading {
+        font-size: 1.7rem;
+      }
+
+      .especialidad-card,
+      .tarifa-card {
+        padding: 1.75rem 1.25rem;
+      }
+
+      .sector-badge {
+        padding: 10px 16px;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-card {
+        aspect-ratio: 4 / 3;
+      }
+
+      .price-value {
+        font-size: 2rem;
+      }
+
+      .tarifas-grid {
+        gap: 2rem;
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE — tablet (min-width: 768px)
+    ============================================================ */
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: inline-flex;
+      }
+
+      .hero-cta-group {
+        flex-direction: row;
+      }
+
+      .hero-stats {
+        flex-direction: row;
+        gap: 3rem;
+      }
+
+      .especialidades-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .portfolio-filter {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      .tarifas-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contacto-inner {
+        grid-template-columns: 1fr 1.6fr;
+        gap: 4rem;
+      }
+    }
+
+    /* ============================================================
+       RESPONSIVE — desktop (min-width: 1024px)
+    ============================================================ */
+    @media (min-width: 1024px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      /* Show overlay at low opacity on hover-capable devices */
+      .card-overlay {
+        opacity: 0;
+      }
+
+      .proceso-timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+      }
+
+      .proceso-step {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        padding: 0 1.5rem;
+      }
+
+      .proceso-step:first-child {
+        padding-left: 0;
+      }
+
+      .proceso-step:last-child {
+        padding-right: 0;
+      }
+
+      .proceso-left {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .proceso-connector {
+        flex: 1;
+        width: auto;
+        height: 1px;
+        min-height: 0;
+        background: linear-gradient(to right,
+          var(--color-border) 0%,
+          rgba(196, 137, 10, 0.08) 100%);
+        margin-top: 0;
+        margin-left: 8px;
+      }
+
+      .proceso-step:last-child .proceso-connector {
+        display: block;
+        opacity: 0;
+      }
+
+      .proceso-content {
+        padding-bottom: 0;
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav" aria-label="Navegación principal">
+    <a href="#hero" class="nav-brand" aria-label="Álvaro Prieto Fotografía">
+      Álvaro<span> Prieto</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#especialidades">Especialidades</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#tarifas">Tarifas</a></li>
+    </ul>
+    <a href="#contacto" class="btn btn-primary nav-cta" aria-label="Ir a contacto">Solicitar presupuesto</a>
+  </nav>
+
+  <!-- ====================================================
+       1. HERO
+  ==================================================== -->
+  <section id="hero" aria-label="Fotografía de producto en Madrid">
+    <div class="hero-inner">
+
+      <div class="hero-badge">
+        <div class="hero-badge-dot" aria-hidden="true"></div>
+        <span class="hero-badge-text">Fotógrafo especialista · Madrid</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Fotografía de producto<br>
+        <em>que convierte.</em>
+      </h1>
+
+      <p class="hero-subheadline">
+        Imágenes que venden antes de que el cliente lea el precio.
+      </p>
+
+      <span class="hero-divider" aria-hidden="true"></span>
+
+      <p class="hero-descriptor">
+        Trabajo con marcas de <strong>moda, cosmética y gastronomía</strong> que entienden que la fotografía no es un gasto — es la diferencia entre un producto que pasa desapercibido y uno que agota stock.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#portfolio" class="btn btn-primary">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </span>
+          Ver portfolio
+        </a>
+        <a href="#contacto" class="btn btn-ghost">Solicitar presupuesto</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat-item">
+          <span class="hero-stat-value">+200</span>
+          <span class="hero-stat-label">Proyectos completados</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-value">8</span>
+          <span class="hero-stat-label">Años de especialización</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-value">48h</span>
+          <span class="hero-stat-label">Entrega estándar</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-line"></div>
+      <span>Explorar</span>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       2. ESPECIALIDADES
+  ==================================================== -->
+  <section id="especialidades" aria-label="Especialidades">
+    <div class="container">
+
+      <header class="section-header reveal">
+        <p class="section-label">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </span>
+          Especialidades
+        </p>
+        <span class="gold-line"></span>
+        <h2 class="section-heading">Tres disciplinas.<br><em>Un mismo nivel de exigencia.</em></h2>
+        <p class="section-subtext">
+          La fotografía de producto tiene sus propios idiomas. Dominar uno no es suficiente — trabajo en tres con la misma obsesión por la luz, la composición y el detalle.
+        </p>
+      </header>
+
+      <div class="especialidades-grid">
+
+        <!-- Moda y cosmética -->
+        <article class="especialidad-card reveal reveal-delay-1">
+          <div class="especialidad-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
+            </svg>
+          </div>
+          <h3 class="especialidad-name">Moda y Cosmética</h3>
+          <p class="especialidad-desc">
+            Perfumes, cremas, labiales, accesorios de lujo. Fotografía de estudio que captura el tacto del material, el brillo del packaging y la promesa que la marca quiere transmitir. Sin imágenes genéricas: cada producto, su propio tratamiento de luz.
+          </p>
+          <div class="especialidad-tags">
+            <span class="tag">Cosmética de lujo</span>
+            <span class="tag">Maquillaje</span>
+            <span class="tag">Accesorios</span>
+            <span class="tag">Skincare</span>
+          </div>
+        </article>
+
+        <!-- Gastronomía -->
+        <article class="especialidad-card reveal reveal-delay-2">
+          <div class="especialidad-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <h3 class="especialidad-name">Gastronomía</h3>
+          <p class="especialidad-desc">
+            Platos de restaurante, productos gourmet, vinos y destilados. Food styling editorial que hace que el espectador casi pueda oler lo que está viendo. Trabajo con chefs y productores para que cada imagen sea una razón para comprar o reservar.
+          </p>
+          <div class="especialidad-tags">
+            <span class="tag">Restaurantes</span>
+            <span class="tag">Vinos y destilados</span>
+            <span class="tag">Gourmet</span>
+            <span class="tag">Carta editorial</span>
+          </div>
+        </article>
+
+        <!-- E-commerce -->
+        <article class="especialidad-card reveal reveal-delay-3">
+          <div class="especialidad-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+          <h3 class="especialidad-name">E-commerce</h3>
+          <p class="especialidad-desc">
+            Fotografía de producto optimizada para tiendas online: fondo blanco técnico, packshots, variantes de color, lifestyle contextual. Flujos de trabajo ágiles para catálogos amplios sin sacrificar la calidad de cada toma individual.
+          </p>
+          <div class="especialidad-tags">
+            <span class="tag">Pack-shots</span>
+            <span class="tag">Fondo blanco</span>
+            <span class="tag">Lifestyle</span>
+            <span class="tag">Catálogo</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       3. PROCESO
+  ==================================================== -->
+  <section id="proceso" aria-label="Proceso de trabajo">
+    <div class="container">
+
+      <header class="section-header section-header--center reveal">
+        <p class="section-label">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </span>
+          Proceso
+        </p>
+        <span class="gold-line gold-line--center"></span>
+        <h2 class="section-heading" style="text-align:center;">Cuatro pasos hacia<br><em>imágenes que trabajan por ti.</em></h2>
+        <p class="section-subtext section-subtext--center">
+          Sin sorpresas, sin correos eternos, sin revisiones infinitas. Un proceso diseñado para que el resultado llegue en el plazo acordado y supere las expectativas.
+        </p>
+      </header>
+
+      <div class="proceso-timeline">
+
+        <div class="proceso-step reveal reveal-delay-1">
+          <div class="proceso-left">
+            <div class="proceso-number" aria-hidden="true">01</div>
+            <div class="proceso-connector" aria-hidden="true"></div>
+          </div>
+          <div class="proceso-content">
+            <p class="proceso-step-label">Paso uno</p>
+            <h3 class="proceso-step-title">Briefing</h3>
+            <p class="proceso-step-desc">
+              Llamo o escribo para entender el producto, la marca, los canales de uso y el resultado esperado. No empiezo a fotografiar sin saber exactamente qué tiene que comunicar cada imagen.
+            </p>
+          </div>
+        </div>
+
+        <div class="proceso-step reveal reveal-delay-2">
+          <div class="proceso-left">
+            <div class="proceso-number" aria-hidden="true">02</div>
+            <div class="proceso-connector" aria-hidden="true"></div>
+          </div>
+          <div class="proceso-content">
+            <p class="proceso-step-label">Paso dos</p>
+            <h3 class="proceso-step-title">Pre-producción</h3>
+            <p class="proceso-step-desc">
+              Moodboard, selección de materiales, preparación del estudio y coordinación logística. Los productos llegan el día del shooting listos para ser fotografiados, no al revés.
+            </p>
+          </div>
+        </div>
+
+        <div class="proceso-step reveal reveal-delay-3">
+          <div class="proceso-left">
+            <div class="proceso-number" aria-hidden="true">03</div>
+            <div class="proceso-connector" aria-hidden="true"></div>
+          </div>
+          <div class="proceso-content">
+            <p class="proceso-step-label">Paso tres</p>
+            <h3 class="proceso-step-title">Shooting</h3>
+            <p class="proceso-step-desc">
+              Jornada de trabajo en estudio en Madrid. Envío selección de previews antes de retoque para validación. Trabajo con tethering para que el cliente pueda ver resultados en tiempo real si asiste.
+            </p>
+          </div>
+        </div>
+
+        <div class="proceso-step reveal reveal-delay-4">
+          <div class="proceso-left">
+            <div class="proceso-number" aria-hidden="true">04</div>
+            <div class="proceso-connector" aria-hidden="true"></div>
+          </div>
+          <div class="proceso-content">
+            <p class="proceso-step-label">Paso cuatro</p>
+            <h3 class="proceso-step-title">Entrega</h3>
+            <p class="proceso-step-desc">
+              Archivos en alta resolución, formatos optimizados para cada canal y carpeta de assets lista para subir directamente. Sin pasos intermedios, sin fricciones.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       4. PORTFOLIO
+  ==================================================== -->
+  <section id="portfolio" aria-label="Portfolio de trabajos">
+    <div class="container">
+
+      <header class="section-header reveal">
+        <p class="section-label">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </span>
+          Portfolio
+        </p>
+        <span class="gold-line"></span>
+        <h2 class="section-heading">Trabajos<br><em>seleccionados.</em></h2>
+        <p class="section-subtext">
+          Una muestra representativa de proyectos recientes. El portfolio completo está disponible bajo petición — muchos clientes piden confidencialidad antes del lanzamiento.
+        </p>
+      </header>
+
+      <div class="portfolio-filter reveal" role="group" aria-label="Filtrar por categoría">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="filter-btn" data-filter="moda" aria-pressed="false">Moda y Cosmética</button>
+        <button class="filter-btn" data-filter="gastro" aria-pressed="false">Gastronomía</button>
+        <button class="filter-btn" data-filter="ecom" aria-pressed="false">E-commerce</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolio-grid">
+
+        <article class="portfolio-card card-moda-1 reveal reveal-delay-1"
+                 data-category="moda"
+                 aria-label="Perfume de lujo — cosmética"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Cosmética</span>
+              <span class="card-label-title">Perfume de lujo — Gran Via</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-gastro-1 reveal reveal-delay-2"
+                 data-category="gastro"
+                 aria-label="Plato de temporada — gastronomía"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Gastronomía</span>
+              <span class="card-label-title">Plato de temporada — Restaurante</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-ecom-1 reveal reveal-delay-3"
+                 data-category="ecom"
+                 aria-label="Electrónica de consumo — e-commerce"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">E-commerce</span>
+              <span class="card-label-title">Electrónica — packshot técnico</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-moda-2 reveal reveal-delay-1"
+                 data-category="moda"
+                 aria-label="Bolso de piel — moda"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Moda</span>
+              <span class="card-label-title">Bolso artesanal — piel italiana</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-cosm-1 reveal reveal-delay-2"
+                 data-category="moda"
+                 aria-label="Skincare — cosmética"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Cosmética</span>
+              <span class="card-label-title">Skincare premium — lanzamiento</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-gastro-2 reveal reveal-delay-3"
+                 data-category="gastro"
+                 aria-label="Vino — gastronomía"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Gastronomía</span>
+              <span class="card-label-title">Añada reserva — bodega familiar</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-ecom-2 reveal reveal-delay-1"
+                 data-category="ecom"
+                 aria-label="Zapatillas — e-commerce"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">E-commerce</span>
+              <span class="card-label-title">Calzado deportivo — catálogo</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card card-cosm-2 reveal reveal-delay-2"
+                 data-category="moda"
+                 aria-label="Labiales — cosmética"
+                 tabindex="0">
+          <div class="card-bg"></div>
+          <div class="card-grain"></div>
+          <div class="card-vignette"></div>
+          <div class="card-overlay">
+            <div>
+              <span class="card-label-category">Cosmética</span>
+              <span class="card-label-title">Colección labiales — editorial</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       5. CLIENTES
+  ==================================================== -->
+  <section id="clientes" aria-label="Sectores y clientes">
+    <div class="container">
+
+      <div class="clientes-intro reveal">
+        <p>Han confiado en este trabajo — y siguen volviendo</p>
+      </div>
+
+      <div class="clientes-sectors reveal">
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">Moda y Textil</span>
+        </div>
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">Cosmética y Belleza</span>
+        </div>
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">Alimentación Gourmet</span>
+        </div>
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/>
+              <circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">E-commerce</span>
+        </div>
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">Hostelería y Restauración</span>
+        </div>
+
+        <div class="sector-badge">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </span>
+          <span class="sector-badge-name">Distribución y Retail</span>
+        </div>
+
+      </div>
+
+      <p class="clientes-note reveal">Los nombres de los clientes están disponibles en la presentación privada del portfolio.</p>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       6. TARIFAS
+  ==================================================== -->
+  <section id="tarifas" aria-label="Tarifas y paquetes">
+    <div class="container">
+
+      <header class="section-header section-header--center reveal">
+        <p class="section-label">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </span>
+          Tarifas
+        </p>
+        <span class="gold-line gold-line--center"></span>
+        <h2 class="section-heading" style="text-align:center;">Inversión que<br><em>se amortiza sola.</em></h2>
+      </header>
+
+      <p class="price-disclaimer reveal">Precios orientativos. El presupuesto final depende del número de productos, complejidad y uso. Sin letra pequeña.</p>
+
+      <div class="tarifas-grid">
+
+        <!-- Básico -->
+        <article class="tarifa-card reveal reveal-delay-1">
+          <p class="tarifa-tier">Paquete básico</p>
+          <h3 class="tarifa-name">Esencial</h3>
+          <p class="tarifa-ideal">Ideal para primeras colecciones o test de producto</p>
+          <div class="tarifa-price">
+            <span class="price-value">490 €</span>
+            <span class="price-suffix">/ sesión</span>
+          </div>
+          <ul class="tarifa-features">
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Hasta 5 referencias de producto
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              3 ángulos por producto (15 imágenes finales)
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Fondo blanco o liso — retoque profesional
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Entrega en 48h — alta resolución + web
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Licencia comercial digital incluida
+            </li>
+          </ul>
+          <a href="#contacto" class="btn btn-ghost" style="width:100%;">Solicitar información</a>
+        </article>
+
+        <!-- Estándar (featured) -->
+        <article class="tarifa-card featured reveal reveal-delay-2">
+          <div class="featured-ribbon" aria-label="Paquete más solicitado">Más solicitado</div>
+          <p class="tarifa-tier">Paquete estándar</p>
+          <h3 class="tarifa-name">Profesional</h3>
+          <p class="tarifa-ideal">Para marcas con catálogo activo y presencia online</p>
+          <div class="tarifa-price">
+            <span class="price-value">980 €</span>
+            <span class="price-suffix">/ sesión</span>
+          </div>
+          <ul class="tarifa-features">
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Hasta 15 referencias — jornada completa
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              5 ángulos por producto + detalle (75 imágenes)
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Iluminación creativa + fondos texturizados
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Retoque avanzado — eliminación de polvo, reflejos
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Pack formatos: e-commerce, redes, catálogo impreso
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Entrega en 72h — galería privada de descarga
+            </li>
+          </ul>
+          <a href="#contacto" class="btn btn-primary" style="width:100%;">Reservar sesión</a>
+        </article>
+
+        <!-- Premium -->
+        <article class="tarifa-card reveal reveal-delay-3">
+          <p class="tarifa-tier">Paquete premium</p>
+          <h3 class="tarifa-name">Exclusivo</h3>
+          <p class="tarifa-ideal">Para campañas, lanzamientos y marcas de lujo</p>
+          <div class="tarifa-price">
+            <span class="price-value">Desde 1.900 €</span>
+          </div>
+          <ul class="tarifa-features">
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Catálogo completo — presupuesto a medida
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Concepto visual completo — dirección de arte
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Lifestyle con modelo y estilismo
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Retoque de nivel editorial — compositing incluido
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Derechos de uso comercial ampliado — prensa y OOH
+            </li>
+            <li>
+              <span class="icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              Coordinación completa — sin gestión por tu parte
+            </li>
+          </ul>
+          <a href="#contacto" class="btn btn-ghost" style="width:100%;">Solicitar propuesta</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       7. CONTACTO
+  ==================================================== -->
+  <section id="contacto" aria-label="Contacto y presupuesto">
+    <div class="container">
+
+      <header class="section-header section-header--center reveal">
+        <p class="section-label">
+          <span class="icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </span>
+          Contacto
+        </p>
+        <span class="gold-line gold-line--center"></span>
+        <h2 class="section-heading" style="text-align:center;">Cuéntame el proyecto.<br><em>Hablamos esta semana.</em></h2>
+        <p class="section-subtext section-subtext--center">
+          Respondo en menos de 24 horas. El presupuesto es siempre personalizado — necesito conocer el proyecto antes de darte un número.
+        </p>
+      </header>
+
+      <div class="contacto-inner">
+
+        <!-- Info lateral -->
+        <div class="reveal reveal-delay-1">
+          <div class="contacto-info-item">
+            <span class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <div>
+              <p class="contacto-info-label">Email</p>
+              <p class="contacto-info-value">
+                <a href="mailto:hola@alvaroprietofoto.es">hola@alvaroprietofoto.es</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="contacto-info-item">
+            <span class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </span>
+            <div>
+              <p class="contacto-info-label">Estudio</p>
+              <p class="contacto-info-value">Madrid — desplazamiento a toda la peninsula</p>
+            </div>
+          </div>
+
+          <div class="contacto-info-item">
+            <span class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </span>
+            <div>
+              <p class="contacto-info-label">Respuesta</p>
+              <p class="contacto-info-value">En menos de 24 horas laborables</p>
+            </div>
+          </div>
+
+          <div class="contacto-info-item" style="border-bottom:none;">
+            <span class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </span>
+            <div>
+              <p class="contacto-info-label">Disponibilidad</p>
+              <p class="contacto-info-value">Plazas disponibles para Q3 2026</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="reveal reveal-delay-2">
+          <form
+            id="contact-form"
+            class="contact-form"
+            novalidate
+            aria-label="Formulario de contacto"
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="nombre">Nombre <sup>*</sup></label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  class="form-control"
+                  placeholder="Tu nombre"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email <sup>*</sup></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="tu@empresa.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="empresa">Empresa o marca</label>
+              <input
+                type="text"
+                id="empresa"
+                name="empresa"
+                class="form-control"
+                placeholder="Nombre de la marca o empresa"
+                autocomplete="organization"
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="tipo-proyecto">Tipo de proyecto <sup>*</sup></label>
+                <select id="tipo-proyecto" name="tipo-proyecto" class="form-control" required>
+                  <option value="" disabled selected>Selecciona una opción</option>
+                  <option value="moda-cosmetica">Moda y Cosmética</option>
+                  <option value="gastronomia">Gastronomía</option>
+                  <option value="ecommerce">E-commerce / Catálogo</option>
+                  <option value="campana">Campaña o lanzamiento</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="num-productos">Número de productos</label>
+                <select id="num-productos" name="num-productos" class="form-control">
+                  <option value="" disabled selected>Aproximado</option>
+                  <option value="1-5">1 a 5 referencias</option>
+                  <option value="6-15">6 a 15 referencias</option>
+                  <option value="16-40">16 a 40 referencias</option>
+                  <option value="40+">Más de 40 referencias</option>
+                  <option value="por-definir">Aún por definir</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="fecha-estimada">Fecha estimada</label>
+                <input
+                  type="text"
+                  id="fecha-estimada"
+                  name="fecha-estimada"
+                  class="form-control"
+                  placeholder="Ej: julio 2026 o sin fecha"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="presupuesto">Presupuesto orientativo</label>
+                <select id="presupuesto" name="presupuesto" class="form-control">
+                  <option value="" disabled selected>Selecciona rango</option>
+                  <option value="hasta-500">Hasta 500 €</option>
+                  <option value="500-1000">500 € – 1.000 €</option>
+                  <option value="1000-2500">1.000 € – 2.500 €</option>
+                  <option value="2500+">Más de 2.500 €</option>
+                  <option value="por-definir">Por definir</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="descripcion">Cuéntame el proyecto</label>
+              <textarea
+                id="descripcion"
+                name="descripcion"
+                class="form-control"
+                placeholder="Describe el producto, el uso previsto de las imágenes, referencias de estilo que te gusten..."
+                rows="5"
+              ></textarea>
+            </div>
+
+            <div class="form-submit-row">
+              <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span class="icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                </span>
+                <span id="submit-label">Enviar solicitud</span>
+              </button>
+              <p class="form-note">Respondo en menos de 24h</p>
+            </div>
+          </form>
+
+          <!-- Success message (hidden by default) -->
+          <div class="form-success" id="form-success" role="status" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h3 class="success-heading">Solicitud recibida</h3>
+            <p class="success-body">
+              Gracias por escribir. Revisaré los detalles del proyecto y te respondere en menos de 24 horas con un primer presupuesto orientativo.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       FOOTER
+  ==================================================== -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-brand">Álvaro Prieto · Fotografía de Producto</p>
+      <p class="footer-meta">
+        Madrid &nbsp;·&nbsp; alvaroprietofoto.es &nbsp;·&nbsp;
+        Diseño web por <a href="https://lhabiastudio.com" target="_blank" rel="noopener noreferrer">LhabiaStudio</a>
+        &nbsp;·&nbsp; &copy; <span id="year"></span>
+      </p>
+      <p class="footer-disclaimer">Diseño conceptual — No autorizado para uso comercial</p>
+    </div>
+  </footer>
+
+  <!-- ====================================================
+       JAVASCRIPT
+  ==================================================== -->
+  <script>
+    'use strict';
+
+    /* -------------------------------------------------------
+       Year
+    ------------------------------------------------------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* -------------------------------------------------------
+       Nav scroll state
+    ------------------------------------------------------- */
+    var nav = document.getElementById('nav');
+
+    function handleNavScroll() {
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', handleNavScroll, { passive: true });
+    handleNavScroll();
+
+    /* -------------------------------------------------------
+       Smooth anchor navigation
+    ------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var targetId = this.getAttribute('href');
+        var target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          var offset = 80; // nav height
+          var top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* -------------------------------------------------------
+       Scroll-reveal — IntersectionObserver
+    ------------------------------------------------------- */
+    var revealEls = document.querySelectorAll('.reveal');
+
+    var revealObserver = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.10,
+        rootMargin: '0px 0px -36px 0px'
+      }
+    );
+
+    revealEls.forEach(function(el) {
+      revealObserver.observe(el);
+    });
+
+    /* -------------------------------------------------------
+       Portfolio filter
+    ------------------------------------------------------- */
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var portfolioCards = document.querySelectorAll('#portfolio-grid .portfolio-card');
+
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var filter = this.getAttribute('data-filter');
+
+        // Update active state and aria-pressed
+        filterBtns.forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-pressed', 'true');
+
+        // Show/hide cards
+        portfolioCards.forEach(function(card) {
+          var category = card.getAttribute('data-category');
+          var shouldShow = filter === 'all' || category === filter;
+
+          if (shouldShow) {
+            card.style.display = 'block';
+            // Re-trigger reveal if not yet visible
+            if (!card.classList.contains('visible')) {
+              card.classList.add('visible');
+            }
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+
+      // Keyboard support
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
+
+    /* -------------------------------------------------------
+       Contact form — submit handler
+    ------------------------------------------------------- */
+    var form = document.getElementById('contact-form');
+    var formSuccess = document.getElementById('form-success');
+    var submitBtn = document.getElementById('submit-btn');
+    var submitLabel = document.getElementById('submit-label');
+
+    function validateForm(data) {
+      var errors = [];
+      if (!data.get('nombre') || data.get('nombre').trim() === '') {
+        errors.push('nombre');
+      }
+      var email = data.get('email');
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRe.test(email.trim())) {
+        errors.push('email');
+      }
+      if (!data.get('tipo-proyecto')) {
+        errors.push('tipo-proyecto');
+      }
+      return errors;
+    }
+
+    function markFieldError(fieldId, hasError) {
+      var el = document.getElementById(fieldId);
+      if (!el) return;
+      if (hasError) {
+        el.style.borderColor = '#C0392B';
+        el.setAttribute('aria-invalid', 'true');
+      } else {
+        el.style.borderColor = '';
+        el.removeAttribute('aria-invalid');
+      }
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var data = new FormData(form);
+      var errors = validateForm(data);
+
+      // Clear previous errors
+      ['nombre', 'email', 'tipo-proyecto'].forEach(function(id) {
+        markFieldError(id, false);
+      });
+
+      if (errors.length > 0) {
+        errors.forEach(function(id) {
+          markFieldError(id, true);
+        });
+        // Focus first error field
+        var firstError = document.getElementById(errors[0]);
+        if (firstError) firstError.focus();
+        return;
+      }
+
+      // Loading state
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Enviando...';
+
+      // Simulate async — in production this would be a real API call
+      setTimeout(function() {
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+        formSuccess.focus();
+      }, 1200);
+    });
+
+    // Live validation — clear error on input
+    ['nombre', 'email', 'tipo-proyecto'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function() {
+        markFieldError(id, false);
+      });
+      el.addEventListener('change', function() {
+        markFieldError(id, false);
+      });
+    });
+
+    /* -------------------------------------------------------
+       Reduced motion — disable transforms for users who prefer it
+    ------------------------------------------------------- */
+    var mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function applyReducedMotion(mq) {
+      if (mq.matches) {
+        document.querySelectorAll('.reveal').forEach(function(el) {
+          el.style.transition = 'none';
+          el.style.transform = 'none';
+          el.style.opacity = '1';
+          el.classList.add('visible');
+        });
+        var scrollLine = document.querySelector('.scroll-line');
+        if (scrollLine) scrollLine.style.animation = 'none';
+        var badge = document.querySelector('.hero-badge-dot');
+        if (badge) badge.style.animation = 'none';
+      }
+    }
+
+    applyReducedMotion(mediaQuery);
+    mediaQuery.addEventListener('change', applyReducedMotion);
+
+  </script>
+
+</body>
+</html>
